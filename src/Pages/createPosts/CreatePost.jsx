@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./create-post.css";
+import { toast, ToastContainer } from "react-toastify";
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [discreption, setDescription] = useState("");
@@ -9,11 +10,26 @@ const CreatePost = () => {
   // form submert handler
   const formSubmetHandler = (e) => {
     e.preventDefault();
-
+    if (!title || !discreption || !category || !file) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("discreption", discreption);
+    formData.append("category", category);
+    formData.append("file", file);
+    // TODO: send formData to server using axios or fetch
     console.log({ title, discreption, category, file });
   };
   return (
-    <div className="section create-post">
+    <section className="create-post">
+      <ToastContainer
+        autoClose={2000}
+        limit={1}
+        theme="colored dark "
+        position="top-center"
+      />
       <h1 className="create-post-title">Create New Post</h1>
       <form onSubmit={formSubmetHandler} className="create-post-form">
         <input
@@ -52,7 +68,7 @@ const CreatePost = () => {
           Create
         </button>
       </form>
-    </div>
+    </section>
   );
 };
 
