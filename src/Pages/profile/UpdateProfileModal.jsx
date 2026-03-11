@@ -3,8 +3,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 
 const user = {
-  username: "Youssef",
-  bio: "hello my name is youssef",
+  username: "Ali Maher",
+  bio: "hello my name is Ali I am a web developer",
 };
 
 const UpdateProfileModal = ({ setUpdateProfile }) => {
