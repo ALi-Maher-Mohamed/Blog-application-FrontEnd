@@ -47,7 +47,7 @@ const CommentsTable = () => {
                       alt=""
                       className="table-user-image"
                     />
-                    <span className="table-username">Youssef Abbas</span>
+                    <span className="table-username">Ali Maher</span>
                   </div>
                 </td>
                 <td>

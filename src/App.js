@@ -16,6 +16,8 @@ import UsersTable from "./Pages/admin/UsersTable.jsx";
 import PostsTable from "./Pages/admin/PostsTable.jsx";
 import CommentsTable from "./Pages/admin/CommentsTable.jsx";
 import CategoriesTable from "./Pages/admin/CategoriesTable.jsx";
+import ForgotPassword from "./Pages/forms/ForgotPassword.jsx";
+import ResetPassword from "./Pages/forms/ResetPassword.jsx";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/profile/:id" element={<Profile />} />
         {/* post routes */}
         <Route path="posts">
@@ -35,17 +39,13 @@ function App() {
           <Route path="categories/:category" element={<Category />} />
         </Route>
 
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/admin-dashboard/users-table" element={<UsersTable />} />
-        <Route path="/admin-dashboard/posts-table" element={<PostsTable />} />
-        <Route
-          path="/admin-dashboard/categories-table"
-          element={<CategoriesTable />}
-        />
-        <Route
-          path="/admin-dashboard/comments-table"
-          element={<CommentsTable />}
-        />
+        <Route path="admin-dashboard">
+          <Route index element={<AdminDashboard />} />
+          <Route path="users-table" element={<UsersTable />} />
+          <Route path="posts-table" element={<PostsTable />} />
+          <Route path="categories-table" element={<CategoriesTable />} />
+          <Route path="comments-table" element={<CommentsTable />} />
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>
