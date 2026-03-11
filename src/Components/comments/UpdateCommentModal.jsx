@@ -9,7 +9,11 @@ const UpdateCommentModal = ({ setUpdateComment }) => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    console.log({text});
+    if (!text) {
+      toast.error("Please fill this the field ");
+      return;
+    }
+    console.log({ text });
   };
 
   return (
@@ -39,4 +43,3 @@ const UpdateCommentModal = ({ setUpdateComment }) => {
 };
 
 export default UpdateCommentModal;
-

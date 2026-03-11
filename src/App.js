@@ -10,6 +10,7 @@ import AdminDashboard from "./Pages/Admin/AdminDashboard.jsx";
 import Footer from "./Components/footer/Footer.jsx";
 import PostDetails from "./Pages/postDetails/PostDetails.jsx";
 import { ToastContainer } from "react-toastify";
+import Category from "./Pages/category/Category.jsx";
 
 function App() {
   return (
@@ -20,9 +21,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/posts" element={<Post />} />
-        <Route path="/posts/create" element={<CreatePost />} />
-        <Route path="/posts/details/:id" element={<PostDetails />} />
+        {/* post routes */}
+        <Route path="posts">
+          <Route index element={<Post />} />
+          <Route path="create" element={<CreatePost />} />
+          <Route path="details/:id" element={<PostDetails />} />
+          <Route path="categories/:category" element={<Category />} />
+        </Route>
+
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Routes>
       <Footer />

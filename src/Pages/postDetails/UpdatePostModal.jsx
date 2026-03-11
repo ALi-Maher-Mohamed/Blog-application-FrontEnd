@@ -11,6 +11,11 @@ const UpdatePostModal = ({ setUpdatePost, post }) => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
+    if (!title || !description || !category) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
     console.log({ title, description, category });
   };
 
