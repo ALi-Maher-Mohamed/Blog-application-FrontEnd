@@ -11,6 +11,7 @@ import Footer from "./Components/footer/Footer.jsx";
 import PostDetails from "./Pages/postDetails/PostDetails.jsx";
 import { ToastContainer } from "react-toastify";
 import Category from "./Pages/category/Category.jsx";
+import Profile from "./Pages/profile/Profile.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile/:id" element={<Profile />} />
         {/* post routes */}
         <Route path="posts">
           <Route index element={<Post />} />
