@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
 const PostsTable = () => {
-   // Delete Post Handler
-   const deletePostHandler = () => {
+  // Delete Post Handler
+  const deletePostHandler = () => {
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this post!",

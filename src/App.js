@@ -6,12 +6,16 @@ import Login from "./Pages/forms/Login";
 
 import Post from "./Pages/post-page/PostPage.jsx";
 import CreatePost from "./Pages/createPosts/CreatePost.jsx";
-import AdminDashboard from "./Pages/Admin/AdminDashboard.jsx";
+import AdminDashboard from "./Pages/admin/AdminDashboard.jsx";
 import Footer from "./Components/footer/Footer.jsx";
 import PostDetails from "./Pages/postDetails/PostDetails.jsx";
 import { ToastContainer } from "react-toastify";
 import Category from "./Pages/category/Category.jsx";
 import Profile from "./Pages/profile/Profile.jsx";
+import UsersTable from "./Pages/admin/UsersTable.jsx";
+import PostsTable from "./Pages/admin/PostsTable.jsx";
+import CommentsTable from "./Pages/admin/CommentsTable.jsx";
+import CategoriesTable from "./Pages/admin/CategoriesTable.jsx";
 
 function App() {
   return (
@@ -32,6 +36,16 @@ function App() {
         </Route>
 
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-dashboard/users-table" element={<UsersTable />} />
+        <Route path="/admin-dashboard/posts-table" element={<PostsTable />} />
+        <Route
+          path="/admin-dashboard/categories-table"
+          element={<CategoriesTable />}
+        />
+        <Route
+          path="/admin-dashboard/comments-table"
+          element={<CommentsTable />}
+        />
       </Routes>
       <Footer />
     </BrowserRouter>

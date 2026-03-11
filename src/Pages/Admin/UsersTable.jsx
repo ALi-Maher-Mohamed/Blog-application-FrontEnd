@@ -38,7 +38,7 @@ const UsersTable = () => {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5, 6,7,8,9,10].map((item) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
               <tr key={item}>
                 <td>{item}</td>
                 <td>
