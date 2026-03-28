@@ -7,7 +7,10 @@ import swal from "sweetalert";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getUserProfile } from "../../redux/apicalls/profileApiCall";
+import {
+  getUserProfile,
+  uploadProfilePhoto,
+} from "../../redux/apicalls/profileApiCall";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -28,7 +31,13 @@ const Profile = () => {
     e.preventDefault();
     if (!file) return toast.warning("there is no file!");
 
-    console.log("image uploaded");
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      dispatch(uploadProfilePhoto(formData));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Delete Account Handler
