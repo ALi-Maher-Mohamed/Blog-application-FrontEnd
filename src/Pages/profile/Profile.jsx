@@ -5,14 +5,23 @@ import { useEffect, useState } from "react";
 import UpdateProfileModal from "./UpdateProfileModal";
 import swal from "sweetalert";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUserProfile } from "../../redux/apicalls/profileApiCall";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.profile);
+
   const [updateProfile, setUpdateProfile] = useState(false);
   const [file, setFile] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
+    dispatch(getUserProfile(id));
+    // using selector to get user profile
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
 
   // Form Submit Handler
   const formSubmitHandler = (e) => {
@@ -46,7 +55,7 @@ const Profile = () => {
       <div className="profile-header">
         <div className="profile-image-wrapper">
           <img
-            src={file ? URL.createObjectURL(file) : "/images/user-avatar.png"}
+            src={file ? URL.createObjectURL(file) : profile?.profilePhoto.url}
             alt=""
             className="profile-image"
           />
@@ -69,11 +78,11 @@ const Profile = () => {
             </button>
           </form>
         </div>
-        <h1 className="profile-username">Ali Maher </h1>
-        <p className="profile-bio">hello my name is Ali I am a web developer</p>
+        <h1 className="profile-username">{profile?.username} </h1>
+        <p className="profile-bio">{profile?.bio}</p>
         <div className="user-date-joined">
           <strong>Date Joined: </strong>
-          <span>01/01/2023</span>
+          <span>{new Date(profile?.createdAt).toDateString()}</span>
         </div>
         <button
           onClick={() => setUpdateProfile(true)}
@@ -84,7 +93,7 @@ const Profile = () => {
         </button>
       </div>
       <div className="profile-posts-list">
-        <h2 className="profile-posts-list-title">Ali Maher Posts</h2>
+        <h2 className="profile-posts-list-title">{profile?.username} Posts</h2>
         <PostList posts={posts} />
       </div>
       <button onClick={deleteAccountHandler} className="delete-account-btn">

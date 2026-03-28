@@ -1,9 +1,13 @@
 import "./form.css";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/apicalls/authApiCall";
+import swal from "sweetalert";
 const Register = () => {
+  const dispatch = useDispatch();
+  const { registerMessage } = useSelector((state) => state.auth);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,9 +18,20 @@ const Register = () => {
     if (username.trim() === "") return toast.error("Username is required");
     if (email.trim() === "") return toast.error("Email is required");
     if (password.trim() === "") return toast.error("Password is required");
-
-    console.log({ username, email, password });
+    dispatch(registerUser({ username, email, password }));
   };
+  const navigate = useNavigate();
+
+  if (registerMessage) {
+    swal({
+      title: "Success!",
+      text: registerMessage,
+      icon: "success",
+      button: "OK",
+    }).then(() => {
+      navigate("/login");
+    });
+  }
 
   return (
     <section className="form-container">
