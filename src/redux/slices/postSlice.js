@@ -4,8 +4,8 @@ const postSlice = createSlice({
   name: "post",
   initialState: {
     posts: [],
-    postsCount: 0, // خليها 0 بدل null للأمان
-    postsCategories: [], // تأكد من الاسم هنا
+    postsCount: 0,
+    postsCategories: [],
     loading: false,
     isPostCreated: false,
     post: null,

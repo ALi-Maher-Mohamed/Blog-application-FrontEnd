@@ -2,7 +2,6 @@ import PostList from "../../Components/Posts/PostList";
 import Sidbar from "../../Components/sidebar/Sidebar";
 import "./home.css";
 import { Link } from "react-router-dom";
-import { categories } from "../../dummyData";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchPosts } from "../../redux/apicalls/postApiCall";
@@ -23,7 +22,7 @@ const Home = () => {
       <div className="home-latest-post">Latest post</div>
       <div className="home-container">
         <PostList posts={posts} />
-        <Sidbar categories={categories} />
+        <Sidbar />
       </div>
       <div className="home-see-posts-link">
         <Link to="/posts" className="home-link">

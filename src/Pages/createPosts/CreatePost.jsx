@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BallTriangle } from "react-loader-spinner";
 import { createPost } from "../../redux/apicalls/postApiCall";
+import { fetchCategories } from "../../redux/apicalls/categoryApiCall";
 const CreatePost = () => {
   const dispatch = useDispatch();
   const { loading, isPostCreated } = useSelector((state) => state.post);
@@ -12,6 +13,7 @@ const CreatePost = () => {
   const [discreption, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [file, setFile] = useState(null);
+  const { categories } = useSelector((state) => state.category);
 
   // form submert handler
   const formSubmetHandler = (e) => {
@@ -37,6 +39,10 @@ const CreatePost = () => {
       toast.success("Post created successfully");
     }
   }, [isPostCreated, navigate]);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [categories, navigate]);
   return (
     <section className="create-post">
       <h1 className="create-post-title">Create New Post</h1>
@@ -53,11 +59,12 @@ const CreatePost = () => {
           onChange={(e) => setCategory(e.target.value)}
           className="create-post-input"
         >
-          <option disabled>select category</option>
-          <option value="technology">Technology</option>
-          <option value="lifestyle">Lifestyle</option>
-          <option value="travel">Travel</option>
-          <option value="food">Food</option>
+          <option value="">Select Category</option>
+          {categories.map((cat) => (
+            <option key={cat._id} value={cat.title}>
+              {cat.title}
+            </option>
+          ))}
         </select>
         <textarea
           className="create-post-textarea"
