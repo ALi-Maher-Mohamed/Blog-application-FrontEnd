@@ -1,22 +1,36 @@
 import "./update-post-modal.css";
 import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updatePost } from "../../redux/apicalls/postApiCall";
 
 const UpdatePostModal = ({ setUpdatePost, post }) => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState(post.title);
   const [description, setDescription] = useState(post.description);
   const [category, setCategory] = useState(post.category);
 
   // From Submit Handler
-  const formSubmitHandler = (e) => {
+  const formSubmitHandler = async (e) => {
     e.preventDefault();
 
-    if (!title || !description || !category) {
+    if (!title || !description) {
       toast.error("Please fill all the fields");
       return;
     }
 
-    console.log({ title, description, category });
+    // جهز البيانات فقط بالحقول المطلوبة من backend
+    const updatedPost = {
+      title,
+      description,
+    };
+
+    try {
+      await dispatch(updatePost(updatedPost, post._id));
+      setUpdatePost(false);
+    } catch (err) {
+      console.log(err.response?.data); // هتشوف أي error من backend
+    }
   };
 
   return (

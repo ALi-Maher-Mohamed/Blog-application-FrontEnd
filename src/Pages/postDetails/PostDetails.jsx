@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import swal from "sweetalert";
 import UpdatePostModal from "./UpdatePostModal";
 import {
+  deletePost,
   fetchSinglePost,
   toggleLikePost,
   updatePostImage,
@@ -39,8 +40,9 @@ const PostDetails = () => {
     formData.append("image", file);
     dispatch(updatePostImage(formData, post?._id));
   };
+  // update post handler
 
-  // Delete Post Handler
+  const navigate = useNavigate();
   const deletePostHandler = () => {
     swal({
       title: "Are you sure?",
@@ -48,13 +50,11 @@ const PostDetails = () => {
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        swal("post has been deleted!", {
-          icon: "success",
-        });
-      } else {
-        swal("Something went wrong!");
+    }).then((isOk) => {
+      if (isOk) {
+        dispatch(deletePost(post?._id));
+        toast.success("Post Deleted Successfully");
+        navigate(`/profile/${user?._id}`);
       }
     });
   };

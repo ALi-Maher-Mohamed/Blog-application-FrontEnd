@@ -97,22 +97,62 @@ export function toggleLikePost(postId) {
   };
 }
 export function updatePostImage(newImage, postId) {
-  return async (dispatch, getState) => {
+  return async (getState) => {
     try {
-      const { data } = await request.put(
-        `/api/posts/update-image/${postId}`,
-        newImage,
-        {
-          headers: {
-            Authorization: "Bearer " + getState().auth.user.token,
-            "Content-Type": "multipart/form-data",
-          },
+      await request.put(`/api/posts/update-image/${postId}`, newImage, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          "Content-Type": "multipart/form-data",
         },
-      );
+      });
       toast.success("Image Updated Successfully");
     } catch (error) {
       // حماية الـ Catch باستخدام الـ Optional Chaining
       toast.error(error.response.data.message);
+    }
+  };
+}
+export function updatePost(newPost, postId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(`/api/posts/${postId}`, newPost, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          // **لا تحط Content-Type**، axios هيضبطها تلقائي مع FormData
+        },
+      });
+
+      dispatch(postActions.setPost(data));
+
+      const currentPosts = getState().post.posts;
+      const updatedPosts = currentPosts.map((p) =>
+        p._id === postId ? data : p,
+      );
+      dispatch(postActions.setPosts(updatedPosts));
+
+      toast.success("Post Updated Successfully");
+    } catch (error) {
+      console.log(error.response?.data); // هتشوف أي error من backend
+      toast.error(error.response?.data?.message || "Update Failed");
+    }
+  };
+}
+export function deletePost( postId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.delete(`/api/posts/${postId}`,  {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          // **لا تحط Content-Type**، axios هيضبطها تلقائي مع FormData
+        },
+      });
+
+      dispatch(postActions.deletePost(data.postId));
+      toast.success("Post Deleted Successfully");
+
+    } catch (error) {
+      console.log(error.response?.data); // هتشوف أي error من backend
+      toast.error(error.response?.data?.message || "Delete Failed");
     }
   };
 }
