@@ -65,3 +65,34 @@ export function createPost(newPost) {
     }
   };
 }
+
+export function fetchSinglePost(postId) {
+  return async (dispatch) => {
+    try {
+      const { data } = await request.get(`/api/posts/${postId}`);
+      dispatch(postActions.setPost(data));
+    } catch (error) {
+      // حماية الـ Catch باستخدام الـ Optional Chaining
+      toast.error(error.response.data.message);
+    }
+  };
+}
+export function toggleLikePost(postId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(
+        `/api/posts/like/${postId}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + getState().auth.user.token,
+          },
+        },
+      );
+      dispatch(postActions.setLike(data));
+    } catch (error) {
+      // حماية الـ Catch باستخدام الـ Optional Chaining
+      toast.error(error.response.data.message);
+    }
+  };
+}
