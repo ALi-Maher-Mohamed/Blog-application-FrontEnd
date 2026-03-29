@@ -12,6 +12,7 @@ import UpdatePostModal from "./UpdatePostModal";
 import {
   fetchSinglePost,
   toggleLikePost,
+  updatePostImage,
 } from "../../redux/apicalls/postApiCall";
 
 const PostDetails = () => {
@@ -34,7 +35,9 @@ const PostDetails = () => {
     e.preventDefault();
     if (!file) return toast.warning("there is no file!");
 
-    console.log("image uploaded successfully");
+    const formData = new FormData();
+    formData.append("image", file);
+    dispatch(updatePostImage(formData, post?._id));
   };
 
   // Delete Post Handler
