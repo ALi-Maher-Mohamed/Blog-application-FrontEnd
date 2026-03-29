@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./create-post.css";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { createPost } from "../../redux/apicalls/postApiCall";
 const CreatePost = () => {
+  const dispatch = useDispatch();
+  const { loading, isPostCreated } = useSelector((state) => state.post);
   const [title, setTitle] = useState("");
   const [discreption, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -16,12 +21,21 @@ const CreatePost = () => {
     }
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("discreption", discreption);
+    formData.append("description", discreption);
     formData.append("category", category);
-    formData.append("file", file);
-    // TODO: send formData to server using axios or fetch
-    console.log({ title, discreption, category, file });
+    formData.append("image", file);
+
+    dispatch(createPost(formData));
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("isPostCreated:", isPostCreated);
+
+    if (isPostCreated) {
+      navigate("/");
+      toast.success("Post created successfully");
+    }
+  }, [isPostCreated, navigate]);
   return (
     <section className="create-post">
       <h1 className="create-post-title">Create New Post</h1>
@@ -59,7 +73,7 @@ const CreatePost = () => {
           className="create-post-upload"
         />
         <button type="submit" className="create-post-btn ">
-          Create
+          {loading ? "Loading..." : "Create Post"}
         </button>
       </form>
     </section>

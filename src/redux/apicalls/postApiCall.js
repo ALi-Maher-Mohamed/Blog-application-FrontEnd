@@ -41,3 +41,27 @@ export function fetchPostsBasedOnCategory(category) {
     }
   };
 }
+export function createPost(newPost) {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(postActions.setLoading());
+      await request.post(`/api/posts`, newPost, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // تأكد أن الاسم يطابق تماماً ما هو موجود في الـ postSlice.js
+      dispatch(postActions.setIsPostCreated());
+      setTimeout(() => {
+        dispatch(postActions.clearIsPostCreated());
+      }, 2000);
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      dispatch(postActions.clearLoading());
+      console.log(error);
+      console.log(error.response?.data?.message || "Something went wrong");
+    }
+  };
+}

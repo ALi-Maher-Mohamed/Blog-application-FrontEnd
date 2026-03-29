@@ -6,6 +6,8 @@ const postSlice = createSlice({
     posts: [],
     postsCount: 0, // خليها 0 بدل null للأمان
     postsCategories: [], // تأكد من الاسم هنا
+    loading: false,
+    isPostCreated: false,
   },
   reducers: {
     setPosts: (state, action) => {
@@ -17,6 +19,19 @@ const postSlice = createSlice({
     },
     setPostsCount: (state, action) => {
       state.postsCount = action.payload;
+    },
+    setLoading: (state) => {
+      state.loading = true;
+    },
+    clearLoading: (state) => {
+      state.loading = false;
+    },
+    setIsPostCreated: (state) => {
+      state.isPostCreated = true;
+      state.loading = false;
+    },
+    clearIsPostCreated: (state) => {
+      state.isPostCreated = false;
     },
   },
 });
