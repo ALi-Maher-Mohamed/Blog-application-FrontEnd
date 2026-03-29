@@ -3,6 +3,7 @@ import "./create-post.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { BallTriangle } from "react-loader-spinner";
 import { createPost } from "../../redux/apicalls/postApiCall";
 const CreatePost = () => {
   const dispatch = useDispatch();
@@ -73,7 +74,19 @@ const CreatePost = () => {
           className="create-post-upload"
         />
         <button type="submit" className="create-post-btn ">
-          {loading ? "Loading..." : "Create Post"}
+          {loading ? (
+            <BallTriangle
+              height={20}
+              width={20}
+              color="#fff"
+              ariaLabel="loading"
+              wrapperClass={{}}
+              wrapperStyle={{}}
+              visible={true}
+            />
+          ) : (
+            "Create Post"
+          )}
         </button>
       </form>
     </section>
