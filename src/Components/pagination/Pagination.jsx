@@ -1,14 +1,39 @@
 import "./pagination.css";
-const Pagination = () => {
+
+const Pagination = ({ pages, currentPage, setCurrentPage }) => {
+  // تحويل التأكد من أن pages رقم
+  const totalPages = Number(pages);
+
+  // إنشاء مصفوفة الصفحات بطريقة أسرع ومختصرة
+  const generatedPages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
     <div className="pagination">
-      <div className="page previous">Previous</div>
-      {[1, 2, 3, 4, 5].map((page) => (
-        <div key={page} className="page">
+      <button
+        className="page previous"
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </button>
+
+      {generatedPages.map((page) => (
+        <button // غيرنا div لـ button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={page === currentPage ? "page active" : "page"}
+        >
           {page}
-        </div>
+        </button>
       ))}
-      <div className="page next">Next</div>
+
+      <button
+        className="page next"
+        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+        disabled={currentPage === totalPages}
+      >
+        Next
+      </button>
     </div>
   );
 };

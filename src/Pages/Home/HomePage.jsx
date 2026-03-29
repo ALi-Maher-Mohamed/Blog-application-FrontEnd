@@ -1,9 +1,18 @@
 import PostList from "../../Components/Posts/PostList";
 import Sidbar from "../../Components/sidebar/Sidebar";
 import "./home.css";
-import { posts, categories } from "../../dummyData";
 import { Link } from "react-router-dom";
+import { categories } from "../../dummyData";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchPosts } from "../../redux/apicalls/postApiCall";
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPosts(1));
+  }, []);
+  const { posts } = useSelector((state) => state.post);
   return (
     <section className="home">
       <div className="home-hero-header">
@@ -13,7 +22,7 @@ const Home = () => {
       </div>
       <div className="home-latest-post">Latest post</div>
       <div className="home-container">
-        <PostList posts={posts.slice(0, 3)} />
+        <PostList posts={posts} />
         <Sidbar categories={categories} />
       </div>
       <div className="home-see-posts-link">

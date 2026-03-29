@@ -1,0 +1,43 @@
+import { postActions } from "../slices/postSlice";
+import request from "../../utils/request";
+import { toast } from "react-toastify";
+
+// جلب البوستات بصفحات معينة
+export function fetchPosts(pageNumber) {
+  return async (dispatch) => {
+    try {
+      const { data } = await request.get(`/api/posts?pageNumber=${pageNumber}`);
+      dispatch(postActions.setPosts(data));
+    } catch (error) {
+      // حماية الـ Catch باستخدام الـ Optional Chaining
+      toast.error(error.response?.data?.message || "Internal Server Error");
+    }
+  };
+}
+
+// جلب إجمالي عدد البوستات
+export function getPostsCount() {
+  return async (dispatch) => {
+    try {
+      const { data } = await request.get(`/api/posts/count`);
+      dispatch(postActions.setPostsCount(data));
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Internal Server Error");
+    }
+  };
+}
+
+// جلب البوستات بناءً على القسم
+export function fetchPostsBasedOnCategory(category) {
+  return async (dispatch) => {
+    try {
+      const { data } = await request.get(`/api/posts?category=${category}`);
+
+      // تأكد أن الاسم يطابق تماماً ما هو موجود في الـ postSlice.js
+      dispatch(postActions.setPostsCategories(data));
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Category Fetch Failed");
+      console.log(error.response?.data?.message || "Something went wrong");
+    }
+  };
+}
