@@ -1,15 +1,18 @@
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createCategory } from "../../redux/apicalls/categoryApiCall";
 
 const AddCategoryForm = () => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
 
   // From Submit Handler
   const formSubmitHandler = (e) => {
     e.preventDefault();
     if (title.trim() === "") return toast.error("Category Title is required");
-
-    console.log({ title });
+    dispatch(createCategory({ title }));
+    setTitle("");
   };
 
   return (
