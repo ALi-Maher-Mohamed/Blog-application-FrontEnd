@@ -4,16 +4,21 @@ import UpdateProfileModal from "./UpdateProfileModal";
 import swal from "sweetalert";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
 import {
+  deleteProfile,
   getUserProfile,
   uploadProfilePhoto,
 } from "../../redux/apicalls/profileApiCall";
 import PostItem from "../../Components/Posts/PostItem";
+import { logOutUser } from "../../redux/apicalls/authApiCall";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state.profile);
+  const { profile, loading, isProfileDeleted } = useSelector(
+    (state) => state.profile,
+  );
   const { user } = useSelector((state) => state.auth);
 
   const [updateProfile, setUpdateProfile] = useState(false);
@@ -41,6 +46,7 @@ const Profile = () => {
   };
 
   // Delete Account Handler
+  const navigate = useNavigate();
   const deleteAccountHandler = () => {
     swal({
       title: "Are you sure?",
@@ -48,16 +54,38 @@ const Profile = () => {
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        swal("Account has been deleted!", {
-          icon: "success",
-        });
-      } else {
-        swal("Something went wrong!");
+    }).then((isOk) => {
+      if (isOk) {
+        dispatch(deleteProfile(user?._id));
+        dispatch(logOutUser());
       }
     });
   };
+  useEffect(() => {
+    if (isProfileDeleted) {
+      toast.success("Your account has been deleted successfully!");
+      navigate("/register");
+    }
+  }, [navigate, isProfileDeleted]);
+  if (loading) {
+    return (
+      <div className="profile-loader">
+        <Oval
+          height={120}
+          width={120}
+          radius={9}
+          color="#000"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="gray"
+          strokeWidth={3}
+          strokeWidthSecondary={3}
+        />
+      </div>
+    );
+  }
 
   return (
     <section className="profile">
@@ -107,10 +135,10 @@ const Profile = () => {
       </div>
       <div className="profile-posts-list">
         <h2 className="profile-posts-list-title">{profile?.username} Posts</h2>
-        {profile?.posts.length === 0 ? (
+        {profile?.posts?.length === 0 ? (
           <p className="no-posts-message">No posts yet.</p>
         ) : (
-          profile?.posts.map((post) => (
+          profile?.posts?.map((post) => (
             <PostItem
               key={post._id}
               post={post}
