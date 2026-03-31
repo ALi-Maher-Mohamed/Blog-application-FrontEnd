@@ -3,27 +3,29 @@ import "./comment-list.css";
 import UpdateCommentModal from "./UpdateCommentModal";
 import swal from "sweetalert";
 import Moment from "react-moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteComment } from "../../redux/apicalls/commentApiCall";
 
 const CommentList = ({ comments }) => {
   const [updateComment, setUpdateComment] = useState(false);
+  const [commentforUpdate, setCommentforUpdate] = useState(null);
+  function updateCommentHandler(comment) {
+    setCommentforUpdate(comment);
+    setUpdateComment(true);
+  }
   const { user } = useSelector((state) => state.auth);
-
+  const dispatch = useDispatch();
   // Delete Comment Handler
-  const deleteCommentHandler = () => {
+  const deleteCommentHandler = (comentId) => {
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this comment!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        swal("comment has been deleted!", {
-          icon: "success",
-        });
-      } else {
-        swal("Something went wrong!");
+    }).then((isOk) => {
+      if (isOk) {
+        dispatch(deleteComment(comentId));
       }
     });
   };
@@ -40,14 +42,14 @@ const CommentList = ({ comments }) => {
             </div>
           </div>
           <p className="comment-item-text">{comment.text}</p>
-          {user?._id === comment?.user?._id && (
+          {user?._id === comment?.user && (
             <div className="comment-item-icon-wrapper">
               <i
-                onClick={() => setUpdateComment(true)}
+                onClick={() => updateCommentHandler(comment)}
                 className="bi bi-pencil-square"
               ></i>
               <i
-                onClick={deleteCommentHandler}
+                onClick={() => deleteCommentHandler(comment?._id)}
                 className="bi bi-trash-fill"
               ></i>
             </div>
@@ -55,7 +57,10 @@ const CommentList = ({ comments }) => {
         </div>
       ))}
       {updateComment && (
-        <UpdateCommentModal setUpdateComment={setUpdateComment} />
+        <UpdateCommentModal
+          commentforUpdate={commentforUpdate}
+          setUpdateComment={setUpdateComment}
+        />
       )}
     </div>
   );

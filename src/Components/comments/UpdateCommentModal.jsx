@@ -1,11 +1,17 @@
 import "./update-comment-modal.css";
 import { toast, ToastContainer } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateComment } from "../../redux/apicalls/commentApiCall";
 
-const UpdateCommentModal = ({ setUpdateComment }) => {
-  const [text, setText] = useState("this is so great");
+const UpdateCommentModal = ({ setUpdateComment, commentforUpdate }) => {
+  const dispatch = useDispatch();
+  const [text, setText] = useState("");
 
-  // From Submit Handler
+  useEffect(() => {
+    setText(commentforUpdate?.text || "");
+  }, [commentforUpdate]);
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -13,9 +19,15 @@ const UpdateCommentModal = ({ setUpdateComment }) => {
       toast.error("Please fill this the field ");
       return;
     }
-    console.log({ text });
-  };
 
+    if (!commentforUpdate?._id) {
+      toast.error("Comment not found");
+      return;
+    }
+
+    dispatch(updateComment(commentforUpdate._id, { text }));
+    setUpdateComment(false);
+  };
   return (
     <div className="update-comment">
       <ToastContainer theme="colored" />

@@ -43,6 +43,21 @@ const postSlice = createSlice({
     deletePost: (state, action) => {
       state.post = action.post.filter((post) => post._id !== action.payload);
     },
+    addCommentToPost: (state, action) => {
+      state.post.comments.push(action.payload);
+    },
+    updateCommentPost: (state, action) => {
+      state.post.comments = state.post.comments.map((comment) =>
+        comment._id === action.payload._id ? action.payload : comment,
+      );
+    },
+    deleteCommenFromPost: (state, action) => {
+      const comment = state.post.comments.find(
+        (comment) => comment._id === action.payload,
+      );
+      const CommentIndex = state.post.comments.indexOf(comment);
+      state.post.comments.splice(CommentIndex, 1);
+    },
   },
 });
 
