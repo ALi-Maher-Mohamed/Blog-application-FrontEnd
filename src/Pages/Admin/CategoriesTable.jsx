@@ -46,7 +46,7 @@ const CategoriesTable = () => {
           <tbody>
             {categories.map((item, index) => (
               <tr key={item._id}>
-                <td>{index}</td>
+                <td>{index + 1}</td>
                 <td>
                   <b>{item.title}</b>
                 </td>
