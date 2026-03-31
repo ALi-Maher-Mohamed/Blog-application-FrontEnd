@@ -1,28 +1,34 @@
 import "./admin-table.css";
 import AdminSidebar from "./AdminSidebar";
-import { posts } from "../../dummyData";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost, getAllPosts } from "../../redux/apicalls/postApiCall";
 
 const PostsTable = () => {
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.post);
   // Delete Post Handler
-  const deletePostHandler = () => {
+  const deletePostHandler = (postId) => {
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this post!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        swal("Post has been deleted!", {
+    }).then((isOk) => {
+      if (isOk) {
+        dispatch(deletePost(postId));
+        swal("Poof! Your post has been deleted!", {
           icon: "success",
         });
-      } else {
-        swal("Something went wrong!");
       }
     });
   };
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
 
   return (
     <div className="table-container">
@@ -45,7 +51,9 @@ const PostsTable = () => {
                 <td>
                   <div className="table-image">
                     <img
-                      src="/images/user-avatar.png"
+                      src={
+                        item.user.profilePhoto?.url || "/default-profile.png"
+                      }
                       alt=""
                       className="table-user-image"
                     />
@@ -60,7 +68,9 @@ const PostsTable = () => {
                     <button>
                       <Link to={`/posts/details/${item._id}`}>View Post</Link>
                     </button>
-                    <button onClick={deletePostHandler}>Delete Post</button>
+                    <button onClick={() => deletePostHandler(item._id)}>
+                      Delete Post
+                    </button>
                   </div>
                 </td>
               </tr>

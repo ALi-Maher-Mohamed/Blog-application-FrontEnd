@@ -137,10 +137,10 @@ export function updatePost(newPost, postId) {
     }
   };
 }
-export function deletePost( postId) {
+export function deletePost(postId) {
   return async (dispatch, getState) => {
     try {
-      const { data } = await request.delete(`/api/posts/${postId}`,  {
+      const { data } = await request.delete(`/api/posts/${postId}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
           // **لا تحط Content-Type**، axios هيضبطها تلقائي مع FormData
@@ -149,10 +149,21 @@ export function deletePost( postId) {
 
       dispatch(postActions.deletePost(data.postId));
       toast.success("Post Deleted Successfully");
-
     } catch (error) {
       console.log(error.response?.data); // هتشوف أي error من backend
       toast.error(error.response?.data?.message || "Delete Failed");
+    }
+  };
+}
+
+export function getAllPosts() {
+  return async (dispatch) => {
+    try {
+      const { data } = await request.get(`/api/posts`);
+      dispatch(postActions.setPosts(data));
+    } catch (error) {
+      // حماية الـ Catch باستخدام الـ Optional Chaining
+      toast.error(error.response?.data?.message || "Internal Server Error");
     }
   };
 }
