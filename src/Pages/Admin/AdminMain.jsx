@@ -5,22 +5,22 @@ import { getPostsCount } from "../../redux/apicalls/postApiCall";
 import { getUsersCount } from "../../redux/apicalls/profileApiCall";
 import AddCategoryForm from "./AddCategoryForm";
 import { useEffect } from "react";
+import { fetchAllComment } from "../../redux/apicalls/commentApiCall";
 
 const AdminMain = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.category);
-  // const {users} = useSelector((state) => state.users);
   const { usersCount } = useSelector((state) => state.profile);
 
   const { postsCount } = useSelector((state) => state.post);
-  // const comments = useSelector((state) => state.comments);
+  const { comments } = useSelector((state) => state.comment);
 
   useEffect(() => {
     dispatch(getUsersCount());
     dispatch(getPostsCount());
     dispatch(fetchCategories());
-    // dispatch(fetchComments());
-  }, [dispatch]);
+    dispatch(fetchAllComment());
+  }, []);
   console.log(postsCount);
   return (
     <div className="admin-main">
@@ -66,7 +66,7 @@ const AdminMain = () => {
         </div>
         <div className="admin-main-card">
           <h5 className="admin-card-title">Comments</h5>
-          <div className="admin-card-count">44</div>
+          <div className="admin-card-count">{comments?.length}</div>
           <div className="admin-card-link-wrapper">
             <Link
               to="/admin-dashboard/comments-table"
