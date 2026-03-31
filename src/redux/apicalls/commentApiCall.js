@@ -47,7 +47,6 @@ export function deleteComment(commentId) {
           },
         },
       );
-
       dispatch(commentActions.deleteComment(commentId));
       dispatch(postActions.deleteCommenFromPost(commentId));
     } catch (error) {

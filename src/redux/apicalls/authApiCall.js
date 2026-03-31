@@ -31,3 +31,13 @@ export function logOutUser() {
     localStorage.removeItem("userInfo");
   };
 }
+export function verifyEmail(userId, token) {
+  return async (dispatch) => {
+    try {
+      await request.get(`/api/auth/${userId}/verify/${token}`);
+      dispatch(authActions.setIsEmailVerified());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
