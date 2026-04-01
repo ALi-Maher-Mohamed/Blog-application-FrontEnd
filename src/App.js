@@ -45,7 +45,10 @@ function App() {
         />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/reset-password/:userId/:token"
+          element={<ResetPassword />}
+        />
         <Route path="/profile/:id" element={<Profile />} />
         {/* post routes */}
         <Route path="posts">
