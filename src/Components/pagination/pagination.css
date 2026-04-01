@@ -2,48 +2,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px;
-  margin-bottom: 20px;
+  gap: 8px;
+  padding: 24px 0;
 }
 
 .page {
-  width: 40px;
+  min-width: 40px;
   height: 40px;
-  border: 1px solid var(--gray-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--dark-color);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
   cursor: pointer;
+  background-color: var(--surface-color);
+  transition: all var(--transition-fast);
+}
+
+.page:hover:not(:disabled) {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
 }
 
 .page.previous,
 .page.next {
   width: max-content;
-  padding: 0 7px;
+  padding: 0 14px;
+  font-weight: 600;
 }
 
 .page.previous {
-  border-radius: 10px 0 0 10px;
+  border-radius: var(--radius-sm);
 }
 
 .page.next {
-  border-radius: 0 10px 10px 0;
+  border-radius: var(--radius-sm);
 }
 
-/* تأكد أن الـ selector يطابق الكلاس المستخدم */
 .page:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
-  /* منع أي أحداث ضغط تماماً */
   pointer-events: none;
-}
-
-/* إضافة cursor pointer للتأكد */
-.page {
-  cursor: pointer;
-  background-color: transparent; /* لضمان عدم وجود خلفية افتراضية للزر */
-  outline: none;
 }

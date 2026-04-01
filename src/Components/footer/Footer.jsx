@@ -1,15 +1,18 @@
 const Footer = () => {
-  return <footer style={styles}>Copyright 2022 &copy;</footer>;
+  return <footer style={styles}>Copyright 2024 &copy; Blog</footer>;
 };
 
 const styles = {
-  color: "var(--white-color)",
-  fontSize: "21px",
-  backgroundColor: "var(--blue-color)",
+  color: "var(--text-secondary)",
+  fontSize: "14px",
+  fontWeight: "500",
+  backgroundColor: "var(--surface-color)",
+  borderTop: "1px solid var(--border-color)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   height: "50px",
+  transition: "background-color 0.3s ease, color 0.3s ease",
 };
 
 export default Footer;

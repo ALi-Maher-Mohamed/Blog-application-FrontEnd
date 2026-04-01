@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { logOutUser } from "../../redux/apicalls/authApiCall";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const HeaderRight = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [dropdown, setDropdown] = useState(false);
-  // logut handler
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  // logout handler
   const logPutHandler = () => {
     setDropdown(false);
     dispatch(logOutUser());
@@ -15,6 +18,10 @@ const HeaderRight = () => {
 
   return (
     <div className="header-right">
+      <button onClick={toggleTheme} className="theme-toggle-btn">
+        {theme === 'light' ? <i className="bi bi-moon-fill"></i> : <i className="bi bi-sun-fill"></i>}
+      </button>
+
       {user ? (
         <>
           <div className="header-right-user-info">

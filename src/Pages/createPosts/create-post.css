@@ -1,42 +1,60 @@
 .create-post {
   width: 100%;
-  height: calc(100vh - 130px);
+  min-height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
 .create-post-title {
-  font-size: 30px;
-  color: var(--primary-color);
-  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 8px;
 }
 
 .create-post-form {
-  width: 700px;
+  width: 600px;
   display: flex;
   flex-direction: column;
+  background-color: var(--surface-color);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
 }
 
 .create-post-input,
 .create-post-textarea,
 .create-post-upload {
   width: 100%;
-  border-radius: 10px;
-  border: 1px solid var(--gray-color);
-  font-size: 21px;
-  padding: 10px;
-  margin: 5px 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  font-size: 15px;
+  font-family: inherit;
+  padding: 14px;
+  margin: 6px 0;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  transition: border-color var(--transition-fast);
+}
+
+.create-post-input:focus,
+.create-post-textarea:focus {
+  border-color: var(--primary-color);
 }
 
 .create-post-textarea {
-  resize: none;
+  resize: vertical;
+  min-height: 140px;
 }
 
 .create-post-upload {
-  background-color: var(--gray-color);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
 .create-post-btn {
@@ -45,17 +63,24 @@
   cursor: pointer;
   background-color: var(--primary-color);
   border: none;
-  font-size: 21px;
-  font-weight: 500;
-  color: var(--white-color);
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 14px;
+  margin-top: 16px;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.create-post-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
 /* Media Queries */
 @media (max-width: 820px) {
   .create-post-form {
     width: 100%;
+    padding: 24px;
   }
 }
