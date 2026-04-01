@@ -3,19 +3,58 @@ import "./create-post.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { BallTriangle } from "react-loader-spinner";
-import { createPost } from "../../redux/apicalls/postApiCall";
+import { BallTriangle, ThreeDots } from "react-loader-spinner"; // ضفت ThreeDots للزرار الجديد
+import {
+  createPost,
+  generateAiPostContent,
+} from "../../redux/apicalls/postApiCall"; // ضيف الـ function الجديدة
 import { fetchCategories } from "../../redux/apicalls/categoryApiCall";
+
 const CreatePost = () => {
   const dispatch = useDispatch();
-  const { loading, isPostCreated } = useSelector((state) => state.post);
+  const navigate = useNavigate();
+
+  // استخراج البيانات من الـ Store
+  const { loading, isPostCreated, aiContent } = useSelector(
+    (state) => state.post,
+  );
+  const { categories } = useSelector((state) => state.category);
+
   const [title, setTitle] = useState("");
   const [discreption, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [file, setFile] = useState(null);
-  const { categories } = useSelector((state) => state.category);
 
-  // form submert handler
+  // تحديث الـ description تلقائياً لما الـ AI يخلص كتابه
+  useEffect(() => {
+    if (aiContent) {
+      setDescription(aiContent);
+    }
+  }, [aiContent]);
+
+  // جلب التصنيفات عند التحميل
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]); // شيلنا categories و navigate من هنا عشان ميعملش infinite loop
+
+  // التعامل مع نجاح إنشاء البوست
+  useEffect(() => {
+    if (isPostCreated) {
+      navigate("/");
+      toast.success("Post created successfully");
+    }
+  }, [isPostCreated, navigate]);
+
+  // فانكشن توليد المحتوى بالذكاء الاصطناعي
+  const aiGenerateHandler = () => {
+    if (!title) {
+      return toast.warning(
+        "يرجى كتابة عنوان أولاً ليتمكن الذكاء الاصطناعي من الكتابة",
+      );
+    }
+    dispatch(generateAiPostContent(title));
+  };
+
   const formSubmetHandler = (e) => {
     e.preventDefault();
     if (!title || !discreption || !category || !file) {
@@ -30,19 +69,7 @@ const CreatePost = () => {
 
     dispatch(createPost(formData));
   };
-  const navigate = useNavigate();
-  useEffect(() => {
-    console.log("isPostCreated:", isPostCreated);
 
-    if (isPostCreated) {
-      navigate("/");
-      toast.success("Post created successfully");
-    }
-  }, [isPostCreated, navigate]);
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [categories, navigate]);
   return (
     <section className="create-post">
       <h1 className="create-post-title">Create New Post</h1>
@@ -54,6 +81,7 @@ const CreatePost = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -66,13 +94,42 @@ const CreatePost = () => {
             </option>
           ))}
         </select>
+
+        {/* زرار الـ AI الجديد */}
+        <div className="ai-btn-container" style={{ marginBottom: "10px" }}>
+          <button
+            type="button"
+            onClick={aiGenerateHandler}
+            className="ai-generate-btn"
+            disabled={loading}
+            style={{
+              backgroundColor: "#6200ea",
+              color: "white",
+              border: "none",
+              padding: "10px 15px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            {loading ? (
+              <ThreeDots color="#fff" height={15} width={15} />
+            ) : (
+              "🪄 AI Writer (Gemini)"
+            )}
+          </button>
+        </div>
+
         <textarea
           className="create-post-textarea"
-          rows="5"
+          rows="8"
           placeholder="Post Description"
           value={discreption}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
+
         <input
           onChange={(e) => setFile(e.target.files[0])}
           type="file"
@@ -80,17 +137,10 @@ const CreatePost = () => {
           name="file"
           className="create-post-upload"
         />
-        <button type="submit" className="create-post-btn ">
+
+        <button type="submit" className="create-post-btn">
           {loading ? (
-            <BallTriangle
-              height={20}
-              width={20}
-              color="#fff"
-              ariaLabel="loading"
-              wrapperClass={{}}
-              wrapperStyle={{}}
-              visible={true}
-            />
+            <BallTriangle height={20} width={20} color="#fff" visible={true} />
           ) : (
             "Create Post"
           )}

@@ -9,13 +9,15 @@ const postSlice = createSlice({
     loading: false,
     isPostCreated: false,
     post: null,
+    // إضافات الـ AI
+    aiContent: "",
+    aiSummary: "",
   },
   reducers: {
     setPosts: (state, action) => {
       state.posts = action.payload;
     },
     setPostsCategories: (state, action) => {
-      // تصحيح الاسم هنا ليتطابق مع الـ initialState
       state.postsCategories = action.payload;
     },
     setPostsCount: (state, action) => {
@@ -37,11 +39,25 @@ const postSlice = createSlice({
     setPost: (state, action) => {
       state.post = action.payload;
     },
+    // إضافات الـ AI الجديدة
+    setAiContent: (state, action) => {
+      state.aiContent = action.payload;
+      state.loading = false;
+    },
+    setAiSummary: (state, action) => {
+      state.aiSummary = action.payload;
+      state.loading = false;
+    },
+    clearAiData: (state) => {
+      state.aiContent = "";
+      state.aiSummary = "";
+    },
+    // بقية الـ reducers الخاصة بك...
     setLike: (state, action) => {
       state.post.likes = action.payload.likes;
     },
     deletePost: (state, action) => {
-      state.post = action.post.filter((post) => post._id !== action.payload);
+      state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
     addCommentToPost: (state, action) => {
       state.post.comments.push(action.payload);
@@ -52,11 +68,9 @@ const postSlice = createSlice({
       );
     },
     deleteCommenFromPost: (state, action) => {
-      const comment = state.post.comments.find(
-        (comment) => comment._id === action.payload,
+      state.post.comments = state.post.comments.filter(
+        (comment) => comment._id !== action.payload,
       );
-      const CommentIndex = state.post.comments.indexOf(comment);
-      state.post.comments.splice(CommentIndex, 1);
     },
   },
 });

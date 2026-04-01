@@ -15,6 +15,54 @@ export function fetchPosts(pageNumber) {
   };
 }
 
+// توليد محتوى البوست بالذكاء الاصطناعي
+export function generateAiPostContent(title) {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(postActions.setLoading());
+      const { data } = await request.post(
+        `/api/posts/ai-write`,
+        { title },
+        {
+          headers: {
+            Authorization: "Bearer " + getState().auth.user.token,
+          },
+        },
+      );
+
+      dispatch(postActions.setAiContent(data.aiContent));
+      toast.success("تم توليد المقال بنجاح! 🪄");
+    } catch (error) {
+      dispatch(postActions.clearLoading());
+      toast.error(error.response?.data?.message);
+    }
+  };
+}
+
+// توليد ملخص (Summary) للبوست
+export function generateAiPostSummary(description) {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(postActions.setLoading());
+      const { data } = await request.post(
+        `/api/posts/ai-summarize`,
+        { description },
+        {
+          headers: {
+            Authorization: "Bearer " + getState().auth.user.token,
+          },
+        },
+      );
+
+      dispatch(postActions.setAiSummary(data.summary));
+      toast.success("تم توليد الملخص بنجاح!");
+    } catch (error) {
+      dispatch(postActions.clearLoading());
+      toast.error(error.response?.data?.message || "فشل تلخيص المقال");
+    }
+  };
+}
+
 // جلب إجمالي عدد البوستات
 export function getPostsCount() {
   return async (dispatch) => {
