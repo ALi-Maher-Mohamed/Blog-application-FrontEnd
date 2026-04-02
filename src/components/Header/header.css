@@ -208,22 +208,39 @@
   box-shadow: 0 0 12px rgba(26, 140, 216, 0.3);
 }
 
+/* التصميم الأساسي (للموبايل أقل من 768px) */
 .header-right-username {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text-main);
-  margin-right: 12px;
   text-transform: capitalize;
   cursor: pointer;
-  display: none; /* Hide on mobile by default */
+  display: none; /* مخفي تماماً في الموبايل */
 }
 
+/* التنسيق للشاشات المتوسطة والكبيرة (Tablets & Laptops) */
 @media (min-width: 768px) {
   .header-right-username {
-    display: block;
+    display: block; /* يظهر في اللابتوب */
+    margin-right: 8px; /* مسافة بين الاسم والصورة */
+  }
+
+  /* نضمن إن الحاوي مرتبهم جنب بعض */
+  .header-user-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* المسافة بين الاسم والصورة وسهم الدروب داون */
+    cursor: pointer;
   }
 }
 
+/* لمسة جمالية للصورة عشان ما تبقاش كبيرة في الموبايل */
+.header-right-user-photo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .header-right-dropdown {
   position: absolute;
   right: 0;

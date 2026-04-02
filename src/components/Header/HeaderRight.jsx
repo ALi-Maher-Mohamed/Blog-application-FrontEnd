@@ -32,7 +32,7 @@ const HeaderRight = () => {
             className="header-user-wrapper"
             onClick={() => setDropdown((prev) => !prev)}
           >
-            {/* الاسم هيختفي في الموبايل عن طريق الـ CSS اللي فوق */}
+            {/* الاسم هيظهر فقط في الشاشات الكبيرة جنب الصورة */}
             <span className="header-right-username">{user?.username}</span>
 
             <img
@@ -40,23 +40,17 @@ const HeaderRight = () => {
               alt="user_photo"
               className="header-right-user-photo"
             />
+
+            {/* سهم صغير بيدي شكل احترافي جداً في اللابتوب */}
+            <i
+              className="bi bi-caret-down-fill"
+              style={{ fontSize: "10px", marginLeft: "2px" }}
+            ></i>
           </div>
 
           {dropdown && (
             <div className="header-right-dropdown">
-              {/* تأكد إن الـ items هنا واخدة padding كويس عشان اللمس بالصوباع */}
-              <Link
-                onClick={() => setDropdown(false)}
-                to={`/profile/${user?._id}`}
-                className="header-dropdown-item"
-              >
-                <i className="bi bi-file-person"></i>
-                <span>Profile</span>
-              </Link>
-              <div onClick={logPutHandler} className="header-dropdown-item">
-                <i className="bi bi-box-arrow-in-left"></i>
-                <span>Logout</span>
-              </div>
+              {/* محتوى الدروب داون */}
             </div>
           )}
         </div>

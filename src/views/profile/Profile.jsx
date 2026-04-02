@@ -44,7 +44,6 @@ const Profile = () => {
       // بننتظر الـ dispatch يخلص
       await dispatch(uploadProfilePhoto(formData));
       setFile(null); // بنصفر الملف عشان الزرار يختفي والـ Preview يرجع لصورة البروفايل الرسمية
-      toast.success("Profile photo updated successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Failed to upload photo");
@@ -98,9 +97,12 @@ const Profile = () => {
       <div className="profile-header">
         <div className="profile-image-wrapper">
           <img
-            // لو فيه ملف مختاره اعرضه (Preview)، لو مفيش اعرض صورة البروفايل من السيرفر
-            src={file ? URL.createObjectURL(file) : profile?.profilePhoto.url}
-            alt=""
+            src={
+              file
+                ? URL.createObjectURL(file)
+                : profile?.profilePhoto?.url || "default-avatar.png"
+            }
+            alt="profile"
             className="profile-image"
           />
           {user?._id === profile?._id && (
