@@ -32,16 +32,22 @@ const Profile = () => {
   }, [id]);
 
   // Form Submit Handler
-  const formSubmitHandler = (e) => {
+  // Form Submit Handler
+  const formSubmitHandler = async (e) => {
     e.preventDefault();
-    if (!file) return toast.warning("there is no file!");
+    if (!file) return toast.warning("There is no file!");
 
     const formData = new FormData();
     formData.append("image", file);
+
     try {
-      dispatch(uploadProfilePhoto(formData));
+      // بننتظر الـ dispatch يخلص
+      await dispatch(uploadProfilePhoto(formData));
+      setFile(null); // بنصفر الملف عشان الزرار يختفي والـ Preview يرجع لصورة البروفايل الرسمية
+      toast.success("Profile photo updated successfully!");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to upload photo");
     }
   };
 
@@ -92,6 +98,7 @@ const Profile = () => {
       <div className="profile-header">
         <div className="profile-image-wrapper">
           <img
+            // لو فيه ملف مختاره اعرضه (Preview)، لو مفيش اعرض صورة البروفايل من السيرفر
             src={file ? URL.createObjectURL(file) : profile?.profilePhoto.url}
             alt=""
             className="profile-image"
@@ -109,11 +116,15 @@ const Profile = () => {
                 name="file"
                 id="file"
                 style={{ display: "none" }}
+                // لما يختار صورة بنسيفها في الـ state
                 onChange={(e) => setFile(e.target.files[0])}
               />
-              <button type="submit" className="upload-profile-photo-btn">
-                upload
-              </button>
+              {/* الزرار مش هيظهر غير لو الـ file فيه قيمة فعلاً */}
+              {file && (
+                <button type="submit" className="upload-profile-photo-btn">
+                  Upload Now
+                </button>
+              )}
             </form>
           )}
         </div>

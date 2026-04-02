@@ -28,32 +28,23 @@ const HeaderRight = () => {
 
       {user ? (
         <div className="header-right-user-info">
-          {/* الـ div ده هو اللي هيتحكم في فتح وقفل القائمة بالضغط على أي مكان فيه */}
           <div
             className="header-user-wrapper"
             onClick={() => setDropdown((prev) => !prev)}
-            style={{
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "5px",
-            }}
           >
+            {/* الاسم هيختفي في الموبايل عن طريق الـ CSS اللي فوق */}
             <span className="header-right-username">{user?.username}</span>
+
             <img
               src={user?.profilePhoto.url}
               alt="user_photo"
               className="header-right-user-photo"
             />
-            {/* أيقونة سهم اختيارية لتعزيز شكل الـ dropdown */}
-            <i
-              className={`bi bi-caret-${dropdown ? "up" : "down"}-fill`}
-              style={{ fontSize: "12px" }}
-            ></i>
           </div>
 
           {dropdown && (
             <div className="header-right-dropdown">
+              {/* تأكد إن الـ items هنا واخدة padding كويس عشان اللمس بالصوباع */}
               <Link
                 onClick={() => setDropdown(false)}
                 to={`/profile/${user?._id}`}
