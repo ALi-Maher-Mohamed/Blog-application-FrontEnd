@@ -6,7 +6,6 @@ import Login from "./pages/forms/Login.jsx";
 
 import Post from "./pages/post-page/PostPage.jsx";
 import CreatePost from "./pages/createPosts/CreatePost.jsx";
-import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import PostDetails from "./pages/postDetails/PostDetails.jsx";
 import { ToastContainer } from "react-toastify";
@@ -21,6 +20,7 @@ import ResetPassword from "./pages/forms/ResetPassword.jsx";
 import NotFOund from "./pages/not-found/NotFound.jsx";
 import { useSelector } from "react-redux";
 import VerifyEmail from "./pages/verify-email/VerifingEmail.jsx";
+import AdminDashboard from "./views/admin/AdminDashboard.jsx";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
