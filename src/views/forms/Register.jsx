@@ -1,7 +1,7 @@
 import "./form.css";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/apicalls/authApiCall";
 import swal from "sweetalert";

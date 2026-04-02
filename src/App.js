@@ -1,25 +1,25 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header.jsx";
-import Home from "./pages/home/HomePage.jsx";
-import Register from "./pages/forms/Register.jsx";
-import Login from "./pages/forms/Login.jsx";
+import Home from "./views/home/HomePage.jsx";
+import Register from "./views/forms/Register.jsx";
+import Login from "./views/forms/Login.jsx";
 
-import Post from "./pages/post-page/PostPage.jsx";
-import CreatePost from "./pages/createPosts/CreatePost.jsx";
+import Post from "./views/post-page/PostPage.jsx";
+import CreatePost from "./views/createPosts/CreatePost.jsx";
 import Footer from "./components/footer/Footer.jsx";
-import PostDetails from "./pages/postDetails/PostDetails.jsx";
+import PostDetails from "./views/postDetails/PostDetails.jsx";
 import { ToastContainer } from "react-toastify";
-import Category from "./pages/category/Category.jsx";
-import Profile from "./pages/profile/Profile.jsx";
-import UsersTable from "./pages/admin/UsersTable.jsx";
-import PostsTable from "./pages/admin/PostsTable.jsx";
-import CommentsTable from "./pages/admin/CommentsTable.jsx";
-import CategoriesTable from "./pages/admin/CategoriesTable.jsx";
-import ForgotPassword from "./pages/forms/ForgotPassword.jsx";
-import ResetPassword from "./pages/forms/ResetPassword.jsx";
-import NotFOund from "./pages/not-found/NotFound.jsx";
+import Category from "./views/category/Category.jsx";
+import Profile from "./views/profile/Profile.jsx";
+import UsersTable from "./views/admin/UsersTable.jsx";
+import PostsTable from "./views/admin/PostsTable.jsx";
+import CommentsTable from "./views/admin/CommentsTable.jsx";
+import CategoriesTable from "./views/admin/CategoriesTable.jsx";
+import ForgotPassword from "./views/forms/ForgotPassword.jsx";
+import ResetPassword from "./views/forms/ResetPassword.jsx";
+import NotFOund from "./views/not-found/NotFound.jsx";
 import { useSelector } from "react-redux";
-import VerifyEmail from "./pages/verify-email/VerifingEmail.jsx";
+import VerifyEmail from "./views/verify-email/VerifingEmail.jsx";
 import AdminDashboard from "./views/admin/AdminDashboard.jsx";
 
 function App() {
