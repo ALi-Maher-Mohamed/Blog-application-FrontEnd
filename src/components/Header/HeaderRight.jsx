@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { logOutUser } from "../../redux/apicalls/authApiCall";
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -9,16 +9,31 @@ const HeaderRight = () => {
   const { user } = useSelector((state) => state.auth);
   const [dropdown, setDropdown] = useState(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const dropdownRef = useRef(null);
 
-  // logout handler
-  const logPutHandler = () => {
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const logoutHandler = () => {
     setDropdown(false);
     dispatch(logOutUser());
   };
 
   return (
     <div className="header-right">
-      <button onClick={toggleTheme} className="theme-toggle-btn">
+      <button
+        onClick={toggleTheme}
+        className="theme-toggle-btn"
+        aria-label="Toggle theme"
+      >
         {theme === "light" ? (
           <i className="bi bi-moon-fill"></i>
         ) : (
@@ -27,38 +42,43 @@ const HeaderRight = () => {
       </button>
 
       {user ? (
-        <div className="header-right-user-info">
+        <div className="header-right-user-info" ref={dropdownRef}>
           <div
             className="header-user-wrapper"
             onClick={() => setDropdown((prev) => !prev)}
+            role="button"
+            aria-expanded={dropdown}
+            aria-haspopup="true"
           >
-            {/* الاسم هيظهر فقط في الشاشات الكبيرة جنب الصورة */}
             <span className="header-right-username">{user?.username}</span>
 
             <img
-              src={user?.profilePhoto.url}
-              alt="user_photo"
+              src={user?.profilePhoto?.url}
+              alt={user?.username}
               className="header-right-user-photo"
             />
 
-            {/* سهم صغير بيدي شكل احترافي جداً في اللابتوب */}
             <i
-              className="bi bi-caret-down-fill"
-              style={{ fontSize: "10px", marginLeft: "2px" }}
+              className="bi bi-caret-down-fill header-caret"
+              style={{
+                transform: dropdown ? "rotate(180deg)" : "rotate(0deg)",
+                transition: "transform 0.2s ease",
+              }}
             ></i>
           </div>
 
           {dropdown && (
             <div className="header-right-dropdown">
-              {/* محتوى الدروب داون */}
               <Link
                 to={`/profile/${user?._id}`}
                 className="header-dropdown-link"
+                onClick={() => setDropdown(false)}
               >
                 <i className="bi bi-person-circle"></i>
                 <span>Profile</span>
               </Link>
-              <button onClick={logPutHandler} className="header-dropdown-link">
+
+              <button onClick={logoutHandler} className="header-dropdown-link">
                 <i className="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
               </button>
