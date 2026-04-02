@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: "https://blog-application-backend-green.vercel.app/",
+  baseURL: "https://blog-application-backend-green.vercel.app",
 });
 
 export default request;
