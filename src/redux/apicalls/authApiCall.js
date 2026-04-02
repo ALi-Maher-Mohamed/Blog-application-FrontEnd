@@ -10,7 +10,7 @@ export function loginUser(user) {
       dispatch(authActions.login(data));
       localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message);
     }
   };
 }
