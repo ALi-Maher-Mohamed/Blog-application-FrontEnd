@@ -7,11 +7,45 @@ import AddCategoryForm from "./AddCategoryForm";
 import { useEffect } from "react";
 import { fetchAllComment } from "../../redux/apicalls/commentApiCall";
 
+const STAT_CARDS = [
+  {
+    key: "users",
+    title: "Total Users",
+    icon: "bi-people-fill",
+    link: "/admin-dashboard/users-table",
+    linkLabel: "Manage users",
+    color: "blue",
+  },
+  {
+    key: "posts",
+    title: "Total Posts",
+    icon: "bi-file-richtext-fill",
+    link: "/admin-dashboard/posts-table",
+    linkLabel: "Manage posts",
+    color: "green",
+  },
+  {
+    key: "categories",
+    title: "Categories",
+    icon: "bi-tags-fill",
+    link: "/admin-dashboard/categories-table",
+    linkLabel: "Manage categories",
+    color: "warn",
+  },
+  {
+    key: "comments",
+    title: "Comments",
+    icon: "bi-chat-square-dots-fill",
+    link: "/admin-dashboard/comments-table",
+    linkLabel: "Manage comments",
+    color: "red",
+  },
+];
+
 const AdminMain = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.category);
   const { usersCount } = useSelector((state) => state.profile);
-
   const { postsCount } = useSelector((state) => state.post);
   const { comments } = useSelector((state) => state.comment);
 
@@ -21,67 +55,59 @@ const AdminMain = () => {
     dispatch(fetchCategories());
     dispatch(fetchAllComment());
   }, []);
-  console.log(postsCount);
+
+  const counts = {
+    users: usersCount,
+    posts: postsCount,
+    categories: categories?.length,
+    comments: comments?.length,
+  };
+
   return (
-    <div className="admin-main">
-      <div className="admin-main-header">
-        <div className="admin-main-card">
-          <h5 className="admin-card-title">Users</h5>
-          <div className="admin-card-count">{usersCount}</div>
-          <div className="admin-card-link-wrapper">
-            <Link to="/admin-dashboard/users-table" className="admin-card-link">
-              See all users
-            </Link>
-            <div className="admin-card-icon">
-              <i className="bi bi-person"></i>
-            </div>
-          </div>
+    <main className="admin-main">
+      {/* ── Welcome Banner ── */}
+      <div className="admin-banner">
+        <div className="admin-banner__text">
+          <h1 className="admin-banner__title">Welcome back 👋</h1>
+          <p className="admin-banner__sub">
+            Here's what's happening with your platform today.
+          </p>
         </div>
-        <div className="admin-main-card">
-          <h5 className="admin-card-title">Posts</h5>
-          <div className="admin-card-count">{postsCount}</div>
-          <div className="admin-card-link-wrapper">
-            <Link to="/admin-dashboard/posts-table" className="admin-card-link">
-              See all posts
-            </Link>
-            <div className="admin-card-icon">
-              <i className="bi bi-file-post"></i>
-            </div>
-          </div>
-        </div>
-        <div className="admin-main-card">
-          <h5 className="admin-card-title">Categories</h5>
-          <div className="admin-card-count">{categories?.length}</div>
-          <div className="admin-card-link-wrapper">
-            <Link
-              to="/admin-dashboard/categories-table"
-              className="admin-card-link"
-            >
-              See all categories
-            </Link>
-            <div className="admin-card-icon">
-              <i className="bi bi-tag-fill"></i>
-            </div>
-          </div>
-        </div>
-        <div className="admin-main-card">
-          <h5 className="admin-card-title">Comments</h5>
-          <div className="admin-card-count">{comments?.length}</div>
-          <div className="admin-card-link-wrapper">
-            <Link
-              to="/admin-dashboard/comments-table"
-              className="admin-card-link"
-            >
-              See all comments
-            </Link>
-            <div className="admin-card-icon">
-              <i className="bi bi-chat-left-text"></i>
-            </div>
-          </div>
+        <div className="admin-banner__decoration" aria-hidden="true">
+          <span />
+          <span />
+          <span />
         </div>
       </div>
+
+      {/* ── Stat Cards ── */}
+      <div className="admin-stats-grid">
+        {STAT_CARDS.map(({ key, title, icon, link, linkLabel, color }, i) => (
+          <div
+            key={key}
+            className={`admin-stat-card admin-stat-card--${color}`}
+            style={{ animationDelay: `${i * 80}ms` }}
+          >
+            <div className="stat-card__top">
+              <div className="stat-card__icon-wrap">
+                <i className={`bi ${icon}`} />
+              </div>
+              <span className="stat-card__badge">{title}</span>
+            </div>
+            <div className="stat-card__count">
+              {counts[key] ?? <span className="stat-skeleton" />}
+            </div>
+            <Link to={link} className="stat-card__link">
+              {linkLabel}
+              <i className="bi bi-arrow-right-short" />
+            </Link>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Add Category ── */}
       <AddCategoryForm />
-    </div>
+    </main>
   );
 };
 

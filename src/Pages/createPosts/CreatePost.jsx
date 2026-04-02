@@ -48,9 +48,7 @@ const CreatePost = () => {
   // فانكشن توليد المحتوى بالذكاء الاصطناعي
   const aiGenerateHandler = () => {
     if (!title) {
-      return toast.warning(
-        "يرجى كتابة عنوان أولاً ليتمكن الذكاء الاصطناعي من الكتابة",
-      );
+      return toast.warning("Please enter a title to generate content with AI");
     }
     dispatch(generateAiPostContent(title));
   };
@@ -117,7 +115,7 @@ const CreatePost = () => {
             {loading ? (
               <ThreeDots color="#fff" height={15} width={15} />
             ) : (
-              "🪄 AI Writer (Gemini)"
+              "🪄 AI Writer "
             )}
           </button>
         </div>

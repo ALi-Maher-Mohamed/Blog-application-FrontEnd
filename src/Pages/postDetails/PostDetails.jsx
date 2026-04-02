@@ -89,13 +89,15 @@ const PostDetails = () => {
       <h1 className="post-details-title">{post?.title}</h1>
       <div className="post-details-user-info">
         <img
-          src={post?.user.profilePhoto.url}
+          src={post?.user?.profilePhoto?.url}
           alt=""
           className="post-details-user-image"
         />
         <div className="post-details-user">
           <strong>
-            <Link to={`/profile/${post?.user._id}`}>{post?.user.username}</Link>
+            <Link to={`/profile/${post?.user?._id}`}>
+              {post?.user?.username}
+            </Link>
           </strong>
           <span>{new Date(post?.createdAt).toDateString()}</span>
         </div>

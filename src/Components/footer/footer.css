@@ -1,0 +1,84 @@
+/* ── Footer ────────────────────────────────────────────────── */
+.site-footer {
+  background-color: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+}
+
+.site-footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Brand */
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  letter-spacing: -0.2px;
+}
+
+.site-footer__brand i {
+  color: var(--primary-color);
+  font-size: 16px;
+}
+
+.site-footer__brand:hover {
+  color: var(--primary-color);
+  transform: none;
+}
+
+/* Copyright */
+.site-footer__copy {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Nav links */
+.site-footer__links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.site-footer__links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer__links a:hover {
+  color: var(--primary-color);
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 540px) {
+  .site-footer__inner {
+    flex-direction: column;
+    height: auto;
+    padding: 14px 16px;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .site-footer__links {
+    gap: 14px;
+  }
+}
