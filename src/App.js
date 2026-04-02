@@ -1,26 +1,26 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Header from "./Components/Header/Header";
-import Home from "./Pages/Home/HomePage";
-import Register from "./Pages/forms/Register";
-import Login from "./Pages/forms/Login";
+import Header from "./components/Header/Header.jsx";
+import Home from "./pages/home/HomePage.jsx";
+import Register from "./pages/forms/Register.jsx";
+import Login from "./pages/forms/Login.jsx";
 
-import Post from "./Pages/post-page/PostPage.jsx";
-import CreatePost from "./Pages/createPosts/CreatePost.jsx";
-import AdminDashboard from "./Pages/admin/AdminDashboard.jsx";
-import Footer from "./Components/footer/Footer.jsx";
-import PostDetails from "./Pages/postDetails/PostDetails.jsx";
+import Post from "./pages/post-page/PostPage.jsx";
+import CreatePost from "./pages/createPosts/CreatePost.jsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import Footer from "./components/footer/Footer.jsx";
+import PostDetails from "./pages/postDetails/PostDetails.jsx";
 import { ToastContainer } from "react-toastify";
-import Category from "./Pages/category/Category.jsx";
-import Profile from "./Pages/profile/Profile.jsx";
-import UsersTable from "./Pages/admin/UsersTable.jsx";
-import PostsTable from "./Pages/admin/PostsTable.jsx";
-import CommentsTable from "./Pages/admin/CommentsTable.jsx";
-import CategoriesTable from "./Pages/admin/CategoriesTable.jsx";
-import ForgotPassword from "./Pages/forms/ForgotPassword.jsx";
-import ResetPassword from "./Pages/forms/ResetPassword.jsx";
-import NotFOund from "./Pages/not-found/NotFound.jsx";
+import Category from "./pages/category/Category.jsx";
+import Profile from "./pages/profile/Profile.jsx";
+import UsersTable from "./pages/admin/UsersTable.jsx";
+import PostsTable from "./pages/admin/PostsTable.jsx";
+import CommentsTable from "./pages/admin/CommentsTable.jsx";
+import CategoriesTable from "./pages/admin/CategoriesTable.jsx";
+import ForgotPassword from "./pages/forms/ForgotPassword.jsx";
+import ResetPassword from "./pages/forms/ResetPassword.jsx";
+import NotFOund from "./pages/not-found/NotFound.jsx";
 import { useSelector } from "react-redux";
-import VerifyEmail from "./Pages/verify-email/VerifingEmail.jsx";
+import VerifyEmail from "./pages/verify-email/VerifingEmail.jsx";
 
 function App() {
   const { user } = useSelector((state) => state.auth);

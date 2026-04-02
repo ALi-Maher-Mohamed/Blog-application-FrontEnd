@@ -1,7 +1,7 @@
 import "./posts-page.css";
-import PostList from "../../Components/Posts/PostList";
-import Sidebar from "../../Components/sidebar/Sidebar";
-import Pagination from "../../Components/pagination/Pagination";
+import PostList from "../../components/Posts/PostList";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Pagination from "../../components/pagination/Pagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, getPostsCount } from "../../redux/apicalls/postApiCall";

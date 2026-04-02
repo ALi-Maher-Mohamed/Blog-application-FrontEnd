@@ -1,5 +1,5 @@
-import PostList from "../../Components/Posts/PostList";
-import Sidbar from "../../Components/sidebar/Sidebar";
+import PostList from "../../components/Posts/PostList";
+import Sidbar from "../../components/sidebar/Sidebar";
 import "./home.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

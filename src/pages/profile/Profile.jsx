@@ -11,7 +11,7 @@ import {
   getUserProfile,
   uploadProfilePhoto,
 } from "../../redux/apicalls/profileApiCall";
-import PostItem from "../../Components/Posts/PostItem";
+import PostItem from "../../components/Posts/PostItem";
 import { logOutUser } from "../../redux/apicalls/authApiCall";
 
 const Profile = () => {

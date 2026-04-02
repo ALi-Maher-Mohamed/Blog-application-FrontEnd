@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import PostList from "../../Components/Posts/PostList";
+import PostList from "../../components/Posts/PostList";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsBasedOnCategory } from "../../redux/apicalls/postApiCall";
 import "./category.css";
