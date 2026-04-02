@@ -19,41 +19,56 @@ const HeaderRight = () => {
   return (
     <div className="header-right">
       <button onClick={toggleTheme} className="theme-toggle-btn">
-        {theme === 'light' ? <i className="bi bi-moon-fill"></i> : <i className="bi bi-sun-fill"></i>}
+        {theme === "light" ? (
+          <i className="bi bi-moon-fill"></i>
+        ) : (
+          <i className="bi bi-sun-fill"></i>
+        )}
       </button>
 
       {user ? (
-        <>
-          <div className="header-right-user-info">
-            <span
-              onClick={() => setDropdown((prev) => !prev)}
-              className="header-right-username"
-            >
-              {user?.username}
-            </span>
+        <div className="header-right-user-info">
+          {/* الـ div ده هو اللي هيتحكم في فتح وقفل القائمة بالضغط على أي مكان فيه */}
+          <div
+            className="header-user-wrapper"
+            onClick={() => setDropdown((prev) => !prev)}
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+            }}
+          >
+            <span className="header-right-username">{user?.username}</span>
             <img
               src={user?.profilePhoto.url}
               alt="user_photo"
               className="header-right-user-photo"
             />
-            {dropdown && (
-              <div className="header-right-dropdown">
-                <Link
-                  onClick={() => setDropdown(false)}
-                  to={`/profile/${user?._id}`}
-                  className="header-dropdown-item"
-                >
-                  <i className="bi bi-file-person"></i>
-                  <span>Profile</span>
-                </Link>
-                <div onClick={logPutHandler} className="header-dropdown-item">
-                  <i className="bi bi-box-arrow-in-left"></i>
-                  <span>Logout</span>
-                </div>
-              </div>
-            )}
+            {/* أيقونة سهم اختيارية لتعزيز شكل الـ dropdown */}
+            <i
+              className={`bi bi-caret-${dropdown ? "up" : "down"}-fill`}
+              style={{ fontSize: "12px" }}
+            ></i>
           </div>
-        </>
+
+          {dropdown && (
+            <div className="header-right-dropdown">
+              <Link
+                onClick={() => setDropdown(false)}
+                to={`/profile/${user?._id}`}
+                className="header-dropdown-item"
+              >
+                <i className="bi bi-file-person"></i>
+                <span>Profile</span>
+              </Link>
+              <div onClick={logPutHandler} className="header-dropdown-item">
+                <i className="bi bi-box-arrow-in-left"></i>
+                <span>Logout</span>
+              </div>
+            </div>
+          )}
+        </div>
       ) : (
         <>
           <Link className="header-right-link" to="/login">
