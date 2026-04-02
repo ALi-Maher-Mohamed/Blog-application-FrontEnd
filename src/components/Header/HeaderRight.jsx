@@ -51,6 +51,17 @@ const HeaderRight = () => {
           {dropdown && (
             <div className="header-right-dropdown">
               {/* محتوى الدروب داون */}
+              <Link
+                to={`/profile/${user?._id}`}
+                className="header-dropdown-link"
+              >
+                <i className="bi bi-person-circle"></i>
+                <span>Profile</span>
+              </Link>
+              <button onClick={logPutHandler} className="header-dropdown-link">
+                <i className="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+              </button>
             </div>
           )}
         </div>
