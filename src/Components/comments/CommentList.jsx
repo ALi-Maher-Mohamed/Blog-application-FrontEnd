@@ -2,19 +2,27 @@ import { useState } from "react";
 import "./comment-list.css";
 import UpdateCommentModal from "./UpdateCommentModal";
 import swal from "sweetalert";
-import Moment from "react-moment";
+// 1. استيراد dayjs والـ plugin الخاص بالوقت النسبي
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteComment } from "../../redux/apicalls/commentApiCall";
+
+// 2. تفعيل الـ plugin
+dayjs.extend(relativeTime);
 
 const CommentList = ({ comments }) => {
   const [updateComment, setUpdateComment] = useState(false);
   const [commentforUpdate, setCommentforUpdate] = useState(null);
+
   function updateCommentHandler(comment) {
     setCommentforUpdate(comment);
     setUpdateComment(true);
   }
+
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   // Delete Comment Handler
   const deleteCommentHandler = (comentId) => {
     swal({
@@ -38,7 +46,8 @@ const CommentList = ({ comments }) => {
           <div className="comment-item-info">
             <div className="comment-item-username">{comment?.userName}</div>
             <div className="comment-item-time">
-              <Moment fromNow>{comment.createdAt}</Moment> ago
+              {/* 3. استخدام dayjs بدلاً من Component الـ Moment */}
+              {dayjs(comment.createdAt).fromNow()}
             </div>
           </div>
           <p className="comment-item-text">{comment.text}</p>
