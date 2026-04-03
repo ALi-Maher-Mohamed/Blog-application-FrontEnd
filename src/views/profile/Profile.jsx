@@ -100,10 +100,14 @@ const Profile = () => {
             src={
               file
                 ? URL.createObjectURL(file)
-                : profile?.profilePhoto?.url || "public/images/user-avatar.png"
+                : profile?.profilePhoto?.url || "/images/user-avatar.png"
             }
-            alt="profile "
+            alt={profile?.username || "profile"}
             className="profile-image"
+            onError={(e) => {
+              // حماية إضافية لو رابط الـ Cloudinary باظ أو الصورة اتمسحت
+              e.currentTarget.src = "/images/user-avatar.png";
+            }}
           />
           {user?._id === profile?._id && (
             <form onSubmit={formSubmitHandler}>

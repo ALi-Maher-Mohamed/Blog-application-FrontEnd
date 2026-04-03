@@ -53,14 +53,12 @@ const HeaderRight = () => {
             <span className="header-right-username">{user?.username}</span>
 
             <img
-              src={
-                user?.profilePhoto?.url ??
-                "public/images/user-avatar.png" +
-                  user?.username +
-                  "&background=random"
-              }
+              src={user?.profilePhoto?.url || "/images/user-avatar.png"} // شيلنا public وضفنا .url لو ماشية مع الـ Model بتاعك
               alt={user?.username}
               className="header-right-user-photo"
+              onError={(e) => {
+                e.currentTarget.src = "/images/user-avatar.png"; // حماية لو الرابط مكسور
+              }}
             />
 
             <i
