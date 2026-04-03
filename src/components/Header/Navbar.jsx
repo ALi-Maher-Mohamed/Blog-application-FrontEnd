@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 const Navbar = ({ toggle, setToggle }) => {
   const { user } = useSelector((state) => state.auth);
-
   return (
     <nav
       style={{
@@ -18,12 +17,10 @@ const Navbar = ({ toggle, setToggle }) => {
           <i className="bi bi-house"></i>
           Home
         </Link>
-
         <Link onClick={() => setToggle(false)} to="/posts" className="nav-link">
           <i className="bi bi-stickies"></i>
           Posts
         </Link>
-
         {user && (
           <Link
             onClick={() => setToggle(false)}
