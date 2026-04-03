@@ -8,14 +8,13 @@ import { loginUser } from "../../redux/apicalls/authApiCall";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
-  // From Submit Handler
   const formSubmitHandler = (e) => {
     e.preventDefault();
     if (email.trim() === "") return toast.error("Email is required");
     if (password.trim() === "") return toast.error("Password is required");
-
     dispatch(loginUser({ email, password }));
   };
 
@@ -40,14 +39,24 @@ const Login = () => {
           <label htmlFor="password" className="form-label">
             Password
           </label>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            className="form-input"
-          />
+          <div className="form-input-wrapper">
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Enter your password"
+              className="form-input"
+            />
+            <button
+              type="button"
+              className="form-eye-btn"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
+            </button>
+          </div>
         </div>
         <button type="submit" className="form-btn">
           Login

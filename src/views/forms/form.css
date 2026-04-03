@@ -65,7 +65,9 @@
   border-radius: var(--radius-full);
   padding: 14px;
   margin-top: 8px;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .form-btn:hover {
@@ -91,4 +93,124 @@
     width: 100%;
     padding: 24px;
   }
+}
+/* Password input wrapper */
+.form-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input-wrapper .form-input {
+  padding-right: 46px;
+}
+
+.form-eye-btn {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.form-eye-btn:hover {
+  color: var(--text-main);
+}
+
+/* Validation states */
+.form-input.input-valid {
+  border-color: var(--green-color, #22c55e);
+}
+
+.form-input.input-invalid {
+  border-color: var(--red-color, #ef4444);
+}
+
+/* Hint messages */
+.form-hint {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.form-hint.success {
+  color: var(--green-color, #22c55e);
+}
+
+.form-hint.error {
+  color: var(--red-color, #ef4444);
+}
+
+/* Subtitle */
+.form-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Password strength */
+.password-strength {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.strength-bars {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.strength-bar {
+  height: 4px;
+  flex: 1;
+  border-radius: 999px;
+  background-color: var(--border-color);
+  transition: background-color 0.3s ease;
+}
+
+.strength-bar.strength-weak {
+  background-color: var(--red-color, #ef4444);
+}
+
+.strength-bar.strength-fair {
+  background-color: #f97316;
+}
+
+.strength-bar.strength-good {
+  background-color: #eab308;
+}
+
+.strength-bar.strength-strong {
+  background-color: var(--green-color, #22c55e);
+}
+
+.strength-label {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 44px;
+}
+
+.strength-label.strength-weak {
+  color: var(--red-color, #ef4444);
+}
+
+.strength-label.strength-fair {
+  color: #f97316;
+}
+
+.strength-label.strength-good {
+  color: #eab308;
+}
+
+.strength-label.strength-strong {
+  color: var(--green-color, #22c55e);
 }
