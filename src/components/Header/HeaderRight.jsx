@@ -53,7 +53,12 @@ const HeaderRight = () => {
             <span className="header-right-username">{user?.username}</span>
 
             <img
-              src={user?.profilePhoto?.url}
+              src={
+                user?.profilePhoto?.url ??
+                "public/images/user-avatar.png" +
+                  user?.username +
+                  "&background=random"
+              }
               alt={user?.username}
               className="header-right-user-photo"
             />

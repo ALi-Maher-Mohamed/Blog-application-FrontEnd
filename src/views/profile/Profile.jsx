@@ -100,9 +100,9 @@ const Profile = () => {
             src={
               file
                 ? URL.createObjectURL(file)
-                : profile?.profilePhoto?.url || "default-avatar.png"
+                : profile?.profilePhoto?.url || "public/images/user-avatar.png"
             }
-            alt="profile"
+            alt="profile "
             className="profile-image"
           />
           {user?._id === profile?._id && (
